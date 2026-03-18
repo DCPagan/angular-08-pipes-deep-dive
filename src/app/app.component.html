@@ -7,10 +7,10 @@
         <p>{{ currentDate | date: 'y-MM-dd' }}</p>
       </div>
     </header>
-    <p>New York: {{ currentTemperaturs.newYork | number:'1.2-2' }}</p>
-    <p>Berlin: {{ currentTemperaturs.berlin | number:'1.2-2' }}</p>
-    <p>Paris: {{ currentTemperaturs.paris | number:'1.2-2' }}</p>
-    <p>Chicago: {{ currentTemperaturs.chicago | number:'1.2-2' }}</p>
+    <p>New York: {{ currentTemperaturs.newYork | temp:fromScale():toScale() }}</p>
+    <p>Berlin: {{ currentTemperaturs.berlin | temp:fromScale():toScale() }}</p>
+    <p>Paris: {{ currentTemperaturs.paris | temp:toScale() }}</p>
+    <p>Chicago: {{ currentTemperaturs.chicago | temp:toScale() }}</p>
   </article>
 
   <article class="temperatures">
@@ -23,7 +23,7 @@
     </header>
     <ul>
       @for (temperature of historicTemperatures; track temperature) {
-      <li (click)="onReset($index)">{{ temperature }}</li>
+      <li (click)="onReset($index)">{{ temperature | temp:fromScale() }}</li>
       }
     </ul>
   </article>
