@@ -1,13 +1,15 @@
-import { DatePipe, DecimalPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, computed, signal } from '@angular/core';
+
+import { SortPipe } from "./sort.pipe";
 import { TemperaturePipe } from './temperature.pipe';
-import { K, R, C, F, TemperatureScale, tempUnit } from './temperature.model';
+import { C, F, TemperatureScale, tempUnit } from './temperature.model';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   templateUrl: './app.component.html',
-  imports: [DatePipe, TemperaturePipe]
+  imports: [DatePipe, TemperaturePipe, SortPipe]
 })
 export class AppComponent {
   currentDate = new Date();
@@ -25,6 +27,10 @@ export class AppComponent {
   fromScale = signal<TemperatureScale>(C);
   toScale = signal<TemperatureScale>(F);
   toUnit = computed<string>(() => tempUnit[this.toScale()]);
+
+  constructor() {
+    this.historicTemperatures.sort((a, b) => a - b);
+  }
 
   onReset(index: number) {
     this.historicTemperatures[index] = 18;
